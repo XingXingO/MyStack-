@@ -1,0 +1,48 @@
+//栈处理多层括号嵌套的情况
+
+/*
+给定一个只包含'(',')','{','}','[',']'的字符串，判断字符串是否有效。
+
+有效字符串要满足：
+  1、左括号必须用相同类型的右括号闭合。
+  2、左括号必须以正确的顺序闭合。*/
+  public class MyStack {
+    public boolean isValid(String s) {
+        //1、先创建一个栈，栈中保存字符类型
+        Stack<Character> stack = new Stack<>();  //Character包装类
+        //2、循环遍历字符串中的每个字符
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);  //取出String中的某一字符保存在c   charAt方法是给定一个下标返回当前的字符
+            //3、判断c是否为左括号，如果是左括号，就入栈
+            if(c == '(' || c == '{' || c == '[') {
+                stack.push(c); //是左括号，将c入栈
+                continue;  //进入下次循环，取出下一个字符
+            }
+            //若发现当前字符不是左括号且栈为空，说明字符串非法
+            if(stack.empty()) {
+                return false;
+            }
+            //4、判断c是否是右括号，如果是右括号，取栈顶元素进行对比
+            char top = stack.pop();
+            // 1)合法情况1
+            if(top == '(' && c == ')') {
+                continue;
+            }
+            // 2)合法情况2
+            if(top == '[' && c == ']') {
+                continue;
+            }
+            // 3)合法情况3
+            if(top == '{' && c == '}') {
+                continue;
+            }
+            //除上述三种合法情况，剩下的都是非法情况
+            return false;
+        }
+        //遍历完字符串之后，判断栈是否为空，空栈说明都是合法的字符串
+        if(stack.empty()) {
+            return true;
+        }
+        return false;
+    }
+}

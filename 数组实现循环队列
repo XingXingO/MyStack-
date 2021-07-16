@@ -1,0 +1,52 @@
+//队列中的有效元素有两种情况  1、head在前tail在后   2、tail在前，head在后
+public class MyQueueByArray {
+    public int[] array = new int[100];
+    //[head,tail)是有效元素的范围
+    private int head = 0;
+    private int tail = 0;
+    private int size = 0;  //表示元素个数
+
+    //入队列
+    //将新元素放到tail位置上，用时tail++
+    public void offer(int val) {
+        if(size == array.length) {
+            //队列满了
+            return;
+        }
+        //队列没满
+        array[tail] = val;
+        tail++;
+        //tail++后超出了数组的有效范围，就循环重头开始
+        if (tail >= array.length) {
+            tail = 0;
+        }
+        size++;  //入栈增加元素
+    }
+
+    //出队列
+    //取出head的元素  同时head++删除操作
+    public Integer poll() {
+        if(size == 0) {
+            //原队列为空，出队列失败，返回错误值
+            return null;
+        }
+        Integer ret = array[head];
+        head++;
+        //head++后超出了数组的有效范围，就循环重头开始
+        if (head >= array.length) {
+            head = 0;
+        }
+        size--;  //出栈删除元素
+        return ret;
+    }
+    
+
+    //取队首元素
+    public Integer peek() {
+        if(size == 0) {
+            return null;
+        }
+        return array[head];
+    }
+
+}

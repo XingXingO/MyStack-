@@ -1,0 +1,54 @@
+public class MyQueueByLinkedList {
+    // Node 叫 “内部类” 定义在某个类或方法中的类
+    // static 效果就是： 创建Node的实例不依赖MyQueueByLinkedList 这个类的实例
+    static class Node {
+        Node next = null;
+        public int val;
+        public Node(int val) {
+            this.val = val;
+        }
+    }
+
+    //创建一个链表，就需要头结点，此时的head不是傀儡节点
+    //基于链表来实现队列，可以入队列从尾部插入，出队列从头部删除；也可以入队列从头插入，出队列从尾删除
+    //此处默认第一种
+    private Node head = null;  //头部
+    private Node tail = null;  //尾部
+
+    //入队列
+    public void offer(int val) {
+        Node newNode = new Node(val);
+        if(head == null) {
+            head = newNode;
+            tail = newNode;
+            return;
+        }
+        //当前不是空链表
+        tail.next = newNode;
+        tail = tail.next;
+    }
+
+    //出队列
+    public Integer poll() {
+        if(head == null) {
+            //原队列为空，出队列失败，返回错误值
+            return null;
+        }
+        int ret = head.val;
+        head = head.next;
+        if(head == null) {
+            //删除当前元素后队列变成空队列
+            final boolean b = tail == null;
+        }
+        return ret;
+    }
+
+    //取队首元素
+    public Integer peek() {
+        if(head == null) {
+            return null;
+        }
+        return head.val;
+    }
+
+}

@@ -1,0 +1,59 @@
+/*设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
+
+push(x) —— 将元素 x 推入栈中。
+pop() —— 删除栈顶的元素。
+top() —— 获取栈顶元素。
+getMin() —— 检索栈中的最小元素。
+
+#解法：像最小栈这样的问题，保证时间复杂度是O(1)，只能用空间换时间
+       创建A,B两个栈
+       A：按照栈的规则进行插入删除元素
+       B：存放A栈中的最小值
+
+ */
+ 
+ class MinStack {
+    private Stack<Integer> A = new Stack<>();
+    private Stack<Integer> B = new Stack<>();
+    //A,B同时入栈
+    public void push(int x) {
+        A.push(x);  //A入栈
+        //判断B是否为空
+        if(B.isEmpty()) {
+            B.push(x);
+            return;
+        }
+        //B不为空，取出当前的最小值
+        int min = B.peek();
+        //判断最小值
+        if(x < min) {
+            min = x;
+        }
+        B.push(min);  //B将最小值入栈
+    }
+
+    //A,B同步出栈
+    public Integer pop() {
+        if(A.isEmpty()) {
+            return null;
+        }
+        B.pop();
+        return A.pop();
+    }
+
+    //取A栈顶元素
+    public Integer top() {
+        if(A.isEmpty()) {
+            return null;
+        }
+        return A.peek();
+    }
+
+    //取B最小值
+    public Integer getMin() {
+        if(B.isEmpty()) {
+            return null;
+        }
+        return B.peek();
+    }
+}
